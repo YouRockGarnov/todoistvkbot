@@ -1,26 +1,13 @@
-from tools import vkapi
-from settings import *
-from states.NotAutarizedState import NotAutarizedState
-from tools.log import logger
+from bots.bot_base import BotBase
+import tools.vkapi
 
 
-class VKBot:
+class VKBot(BotBase):
     def __init__(self):
-        self._secretaries = dict()
-        self._state = NotAutarizedState()
+        super().__init__()
 
-    def reply_to_message(self, data):
-        logger.info('call "vkbot.reply_to_message')
-        user_id = data['object']['user_id']
-
-        if user_id not in self._secretaries.keys():
-            self._secretaries[user_id] = secretary_type()
-
-        for message in self._secretaries[user_id].reply(data):
-            vkapi.send_message(user_id, token, message)
-
-        # Сообщение о том, что обработка прошла успешно
-        return 'ok'
+    def send_message(self, user_id, token, message):
+        vkapi.send_message(user_id, token, message)
 
 
 def return_all_atr(data):
