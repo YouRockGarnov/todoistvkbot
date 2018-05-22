@@ -25,11 +25,18 @@ def user_answer(message):
 def preparing_message(message):
     data = {'object': dict()}
     data['object']['title'] = message.text.split('\n')[0]
-    data['object']['body'] = {'body': message.text.split('\n')[1:]}
+
+    replied_text = ''
+    replied_message = message
+    print(replied_message.reply_to_message)
+    while  replied_message.reply_to_message != None:
+        replied_text += '\n\n' + replied_message.reply_to_message.text
+        replied_message = replied_message.reply_to_message
+
+    data['object']['body'] = '\n'.join(message.text.split('\n')[1:]
+                                       + [replied_text])
     data['object']['user_id'] = message.chat.id
     data['object']['success'] = True
-
-    return data
 
 
 def telebot_main():
