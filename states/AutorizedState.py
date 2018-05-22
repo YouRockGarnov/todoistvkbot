@@ -11,4 +11,4 @@ class AutorizedState(StateBase):
 
         service.add_note(messages, data['object']['title'])
         self._messages = ['Я записала эту заметку.']
-        self._next_state = AutorizedState()
+        self._next_state = self

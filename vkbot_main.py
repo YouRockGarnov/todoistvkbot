@@ -1,4 +1,5 @@
 from flask import Flask, request, json
+from configs.config_vkbot import *
 from settings import *
 from tools.debug import *
 from bots.vkbot import VKBot

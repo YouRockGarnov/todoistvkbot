@@ -11,7 +11,7 @@ class EvernoteService(ServiceBase):
             text += message
 
         logger.info('call "add_note"')
-        requests.post('post.com', json=json.dumps({'title': title, 'messages': text, 'email': self._email}))
+        requests.post('https://tremendousmajesticform--shibaeff.repl.co/message/', json=json.dumps({'title': title, 'messages': text, 'email': self._email}))
 
     def set_email(self, email):
         self._email = email
