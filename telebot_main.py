@@ -18,13 +18,26 @@ def user_answer(message):
         logger.info('Run in debug')
 
     data = preparing_message(message)
+    print(data)
     logger.info('pulled message: ' + str(data['object']))
-    telegram_bot.reply_to_message(data)
+    if data['type'] == 'start':
+      print(message)
+      global telegram_bot
+      telegram_bot = Telebot()
+      telegram_bot.reply_to_message(data)
+    elif data['type'] == 'help':
+      telegram_bot.send_message(data['object']['user_id'], 'Этот бот создан для того, чтобы вы могли сохранять заметки, не выходя из Telegram! Напишите "/start", '
+                                                             'зарегистрируйтесь в системе и пришлите ответным письмом email на который зарегистрировались. '
+                                                             'Теперь бот будет сохранять в заметки все сообщения, в том числе и пересланные.\nЕсли что-то пошло не так '
+                                                             'введите "/start".')
+    else:
+      telegram_bot.reply_to_message(data)
 
 
 def preparing_message(message):
     data = {'object': dict()}
     data['object']['title'] = message.text.split('\n')[0]
+    data['type'] = get_type(message)
 
     replied_text = ''
     replied_message = message
@@ -37,6 +50,16 @@ def preparing_message(message):
                                        + [replied_text])
     data['object']['user_id'] = message.chat.id
     data['object']['success'] = True
+
+    return data
+
+def get_type(message):
+    if message.text == '/start' or message.text == '/restart':
+        return 'start'
+    elif message.text == '/help':
+        return 'help'
+    else:
+        return 'new_message'
 
 
 def telebot_main():
