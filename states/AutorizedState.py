@@ -9,6 +9,10 @@ class AutorizedState(StateBase):
             for message in data['object']['body']:
                 messages.append(message['body'])
 
-        service.add_note(messages, data['object']['title'])
-        self._messages = ['Я записала эту заметку.']
+        response = service.add_note(messages, data['object']['title'])
+        if response == 'doubled':
+            self._messages = ['Заметка с таким заголовком уже существует. Я переписала ее.']
+        else:
+            self._messages = ['Я записала эту заметку.']
+
         self._next_state = self
