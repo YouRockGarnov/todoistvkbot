@@ -8,7 +8,7 @@ from states.WaitForAutorizeState import WaitForAutorizeState
 class SecretaryBase:
     def __init__(self):
         self._state = NotAutarizedState()
-        self._service = EvernoteService()  # hardcoding, it isn't good
+        self._service = EvernoteService()  # TODO hardcoding, it isn't good
         self._email = None
 
     def take_off_blouse(self):
