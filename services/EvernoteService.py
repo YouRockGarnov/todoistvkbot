@@ -14,6 +14,3 @@ class EvernoteService(ServiceBase):
         response = requests.post('https://tremendousmajesticform--shibaeff.repl.co/message/', json=json.dumps({'title': title, 'messages': text, 'email': self._email}))
 
         return response.text
-
-    def set_email(self, email):
-        self._email = email
