@@ -11,6 +11,7 @@ class SecretaryBase:
         self._service = ServiceBase()
         self._email = None
 
+    #just for fun
     def take_off_blouse(self):
         print('rrRRRrr')
 
@@ -22,14 +23,13 @@ class SecretaryBase:
 
         self._state.act(data, self._service)
 
+        # в этом состоянии должен вернуться емейл
         if type(self._state) == WaitForAutorizeState:
             self._email = self._state.email
             self._service.set_email(self._email)
 
         messages = self._state._messages
-        self._state = self._state.next_state
+        self._state = self._state.next_state # заменяем текущее состояние следующим
 
         for message in messages:
             yield message
-
-
