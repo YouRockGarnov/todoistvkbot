@@ -6,4 +6,4 @@ from tools.log import logger
 class EvernoteWaitForAutorizeState(WaitForAutorizeState):
     def __init__(self):
         super().__init__()
-        self._success_autoriz_advice = ''
+        self._success_autoriz_advice = 'Теперь вы можете сохранять заметки, просто переслав сообщения мне!'

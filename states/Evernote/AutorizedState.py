@@ -1,4 +1,4 @@
-from states.Evernote.StateBase import StateBase
+from states.Bases.StateBase import StateBase
 
 
 class AutorizedState(StateBase):

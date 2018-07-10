@@ -1,5 +1,5 @@
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
-from states.Evernote.StateBase import StateBase
+from states.Bases.StateBase import StateBase
 
 # состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
 class NotAutarizedState(StateBase):

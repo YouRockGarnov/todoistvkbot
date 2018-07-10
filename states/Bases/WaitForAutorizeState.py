@@ -1,5 +1,5 @@
 from states.Evernote.AutorizedState import AutorizedState
-from states.Evernote.StateBase import StateBase
+from states.Bases.StateBase import StateBase
 from tools.log import logger
 
 
