@@ -1,6 +1,5 @@
-from states.AutorizedState import AutorizedState
-from states.StateBase import StateBase
-from tools import vkapi
+from states.Evernote.AutorizedState import AutorizedState
+from states.Evernote.StateBase import StateBase
 from tools.log import logger
 
 
@@ -8,7 +7,7 @@ class WaitForAutorizeState(StateBase):
     def act(self, data, service):
         logger.info('Call WaitForAutorizationState.act()')
 
-        success = data['object']['success']
+        success = data['object']['success'] # TODO в success должен записываться ответ сервера
         self.email = data['object']['title']
 
         if success:

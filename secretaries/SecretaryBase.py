@@ -1,8 +1,6 @@
-from settings import *
-from states.NotAutarizedState import NotAutarizedState
-from tools.log import logger
+from states.Evernote.NotAutarizedState import NotAutarizedState
 from services.ServiceBase import ServiceBase
-from states.WaitForAutorizeState import WaitForAutorizeState
+from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
 
 class SecretaryBase:

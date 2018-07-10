@@ -1,6 +1,4 @@
-from tools import vkapi
 from settings import *
-from states.NotAutarizedState import NotAutarizedState
 from tools.log import logger
 
 

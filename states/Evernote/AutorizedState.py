@@ -1,11 +1,10 @@
-from tools import vkapi
-from states.StateBase import StateBase
+from states.Evernote.StateBase import StateBase
 
 
 class AutorizedState(StateBase):
     def act(self, data, service):
         messages = list()
-        if 'body' in data['object']:
+        if 'body' in data['object']: # взять пересланные сообщения
             for message in data['object']['body']:
                 messages.append(message['body'])
 
