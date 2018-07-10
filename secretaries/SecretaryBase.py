@@ -1,14 +1,14 @@
 from settings import *
 from states.NotAutarizedState import NotAutarizedState
 from tools.log import logger
-from services.EvernoteService import EvernoteService
+from services.ServiceBase import ServiceBase
 from states.WaitForAutorizeState import WaitForAutorizeState
 
 
 class SecretaryBase:
     def __init__(self):
         self._state = NotAutarizedState()
-        self._service = EvernoteService()  # TODO hardcoding, it isn't good
+        self._service = ServiceBase()
         self._email = None
 
     def take_off_blouse(self):
