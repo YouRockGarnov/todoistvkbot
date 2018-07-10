@@ -34,6 +34,7 @@ def user_answer(message):
       telegram_bot.reply_to_message(data)
 
 
+# преобразования Telegram собщения в VK сообщение, просто внутренний протокол построен на протоколе VK API
 def preparing_message(message):
     data = {'object': dict()}
     data['object']['title'] = message.text.split('\n')[0]

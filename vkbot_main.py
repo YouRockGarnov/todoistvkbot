@@ -13,14 +13,14 @@ vkbot = VKBot()
 def processing():
     # Распаковываем json из пришедшего POST-запроса
 
-    print('processing')
+    logger.info('processing')
 
     if DEBUG:
         logger.info('Run in debug')
-    else:
-        data = json.loads(request.data)
-    # Вконтакте в своих запросах всегда отправляет поле типа
 
+    data = json.loads(request.data)
+
+    # Вконтакте в своих запросах всегда отправляет поле типа
     if 'type' not in data.keys():
         return 'not vk'
 
@@ -35,7 +35,6 @@ def processing():
 
     return 'ok'
 
-@app.route('/', methods=['POST'])
 def debug_processing(data):
     # Распаковываем json из пришедшего POST-запроса
 
@@ -43,10 +42,8 @@ def debug_processing(data):
 
     if DEBUG:
         logger.info('Run in debug')
-    else:
-        data = json.loads(request.data)
-    # Вконтакте в своих запросах всегда отправляет поле типа
 
+    # Вконтакте в своих запросах всегда отправляет поле типа
     if 'type' not in data.keys():
         return 'not vk'
 
@@ -61,13 +58,4 @@ def debug_processing(data):
 
     return 'ok'
 
-
-def test():
-    print(debug_processing({'object': {'user_id': 'user_id', 'body': 'login password'}, 'type': 'message_new'}))
-    print(debug_processing({'object': {'user_id': 'user_id', 'success': 'True', 'title': 'hamta@yandex.ru'}, 'type': 'service_reply'}))
-    #print(processing({'object': {'user_id': 'user_id', 'title': 'Заголовок', 'body': [{'body': 'Первое пересланное сообщение'},
-    #                                                            {'body': 'Второе пересланное сообщение'}]}, 'type': 'message_new'}))
-    print(debug_processing({'type': 'message_new', 'object': {'user_id': 'user_id', 'title': 'Title'}}))
-
-test()
-#   app.run()
+app.run()
