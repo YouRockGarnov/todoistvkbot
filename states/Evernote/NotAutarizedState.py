@@ -1,8 +1,8 @@
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
-from states.Evernote.StateBase import StateBase
+from states.Bases.NotAutarizedState import NotAutarizedState
 
 # состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
-class NotAutarizedState(StateBase):
+class EvernoteNotAutarizedState(NotAutarizedState):
     def __init__(self):
-        super.__init__()
+        super().__init__()
         self._mess_ending = '\nПришлите ответным письмом email на который вы зарегистрировали аккаунт.'

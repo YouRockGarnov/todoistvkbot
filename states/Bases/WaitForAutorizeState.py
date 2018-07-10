@@ -4,6 +4,10 @@ from tools.log import logger
 
 
 class WaitForAutorizeState(StateBase):
+    def __init__(self):
+        super().__init__()
+        self._success_autoriz_advice = ''
+
     def act(self, data, service):
         logger.info('Call WaitForAutorizationState.act()')
 
@@ -11,8 +15,7 @@ class WaitForAutorizeState(StateBase):
         self.email = data['object']['title']
 
         if success:
-            self._messages = ['Авторизация прошла успешно! '
-                                            'Теперь вы можете сохранять заметки, просто переслав сообщения мне!']
+            self._messages = ['Авторизация прошла успешно!\n{0}'.format(self._success_autoriz_advice)]
             self._next_state = AutorizedState()
 
         else:
