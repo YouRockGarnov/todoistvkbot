@@ -14,4 +14,4 @@ class AutorizedState(StateBase):
         else:
             self._messages = ['Я записала эту заметку.']
 
-        self._next_state = self
+        self._next_state = self # ибо переходить уже некуда

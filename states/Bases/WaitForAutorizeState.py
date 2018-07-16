@@ -6,7 +6,7 @@ from tools.log import logger
 class WaitForAutorizeState(StateBase):
     def __init__(self):
         super().__init__()
-        self._success_autoriz_advice = ''
+        self._success_autoriz_advice = '' # что вывести после сообщения об успешной авторизации
 
     def act(self, data, service):
         logger.info('Call WaitForAutorizationState.act()')

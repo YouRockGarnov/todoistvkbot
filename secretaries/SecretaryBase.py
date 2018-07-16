@@ -2,11 +2,16 @@ from states.Evernote.NotAutarizedState import NotAutarizedState
 from services.ServiceBase import ServiceBase
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
+'''Секретарь занимается логикой взаимодействия с пользователем.
+
+Общается с пользователем именно этот класс.
+Общение осуществляется с помощью состояний (по сути секретарь просто ходит по автомату.
+'''
 
 class SecretaryBase:
     def __init__(self):
         self._state = NotAutarizedState()
-        self._service = ServiceBase()
+        self._service = ServiceBase() # сервис, за которым закреплен секретарь
         self._email = None
 
     #just for fun

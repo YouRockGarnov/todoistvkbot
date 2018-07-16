@@ -18,13 +18,13 @@ def user_answer(message):
         logger.info('Run in debug')
 
     data = preparing_message(message)
-    print(data)
+
     logger.info('pulled message: ' + str(data['object']))
     if data['type'] == 'start':
-      print(message)
       global telegram_bot
       telegram_bot = Telebot()
       telegram_bot.reply_to_message(data)
+
     elif data['type'] == 'help':
       telegram_bot.send_message(data['object']['user_id'], 'Этот бот создан для того, чтобы вы могли сохранять заметки, не выходя из Telegram! Напишите "/start", '
                                                              'зарегистрируйтесь в системе и пришлите ответным письмом email на который зарегистрировались. '
@@ -49,6 +49,7 @@ def preparing_message(message):
 
     data['object']['body'] = '\n'.join(message.text.split('\n')[1:]
                                        + [replied_text])
+
     data['object']['user_id'] = message.chat.id
     data['object']['success'] = True
 
@@ -66,7 +67,7 @@ def get_type(message):
 def telebot_main():
     while True:
         try:
-            bot.polling(none_stop=True, interval=3)
+            bot.polling(none_stop=True, interval=3) # забирает сообщения
         except Exception as e:
             # logging.error(e)
             time.sleep(10)

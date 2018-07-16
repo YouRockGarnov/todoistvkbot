@@ -1,6 +1,13 @@
 from settings import *
 from tools.log import logger
 
+'''Родительский класс для ботов
+
+Бот должен быть один в программе. 
+Он является посредником  между нужным api и нашей системой.
+В терминах MVP Bot - то View.
+Бот создается в main соответствующего месседжера.
+'''
 
 class BotBase:
     def __init__(self):
