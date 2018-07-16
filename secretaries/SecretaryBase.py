@@ -6,6 +6,7 @@ from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
 Общается с пользователем именно этот класс.
 Общение осуществляется с помощью состояний (по сути секретарь просто ходит по автомату.
+В териминах MVP Secretary - это Presenter.
 '''
 
 class SecretaryBase:
