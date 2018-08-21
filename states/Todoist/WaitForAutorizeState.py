@@ -6,8 +6,5 @@ from tools.log import logger
 class TodoistWaitForAutorizeState(WaitForAutorizeState):
     def __init__(self):
         super().__init__()
-        self._success_autoriz_advice = 'Теперь вы можете сохранять события, просто переслав сообщения мне! ' \
-                                       'Я смогу сама определить какое событие необходимо создать из контекста.'
-
-    def act(self):
-        
+        self._success_autoriz_advice = 'Теперь вы можете сохранять задачи, просто переслав сообщения мне! ' \
+                                       'Я смогу сама определить какое задание необходимо создать из контекста.'
