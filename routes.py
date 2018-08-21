@@ -17,3 +17,4 @@ def todoist_redirect():
         subs = db.get(Subscription.user_id == args['state']) # state по совместительству и user_id, см. TodoistService
 
         subs.access_token = access_token
+        subs.save()
