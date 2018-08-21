@@ -1,10 +1,11 @@
 from settings import *
 from tools.log import logger
 
-
+# Bot обрабатывает сообщения и отправляет их.
+# Он один на всю программу для конкретного сервиса (один VKBot и один TelegramBot)
 class BotBase:
     def __init__(self):
-        self._secretaries = dict()
+        self._secretaries = dict() # для каждого пользователя (id) свой секретарь
 
     def reply_to_message(self, data):
         logger.info('call "bot.reply_to_message')
@@ -22,6 +23,8 @@ class BotBase:
         return 'ok'
 
     # это чисто для BotBase
+    from abc import abstractmethod
+    @abstractmethod
     def send_message(self, user_id, message):
         logger.info('send \"' + message.encode().decode("utf-8", 'replace') + ' \" to ' + str(user_id))
         print(message)

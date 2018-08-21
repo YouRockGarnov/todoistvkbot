@@ -4,8 +4,7 @@ from settings import *
 from tools.debug import *
 from bots.vkbot import VKBot
 from tools.log import logger
-
-app = Flask(__name__)
+from app import app
 
 vkbot = VKBot()
 

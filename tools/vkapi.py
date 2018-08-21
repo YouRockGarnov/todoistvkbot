@@ -10,8 +10,9 @@ api = vk.API(session, v=5.74)
 
 sended_message = ''
 
-_app_id_for_auth = '6630979' # для того, чтобы получать доступ к странице - нужна авторизация.
+_app_id_for_auth = 'incorrect' # для того, чтобы получать доступ к странице - нужна авторизация.
                              # Она производится через это приложение.
+
 auth_link = '''https://oauth.vk.com/authorize?client_id={app_id}
                    &scope=photos,audio,video,docs,notes,pages,status,
                    offers,questions,wall,groups,messages,email,

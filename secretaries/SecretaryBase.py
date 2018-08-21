@@ -2,7 +2,7 @@ from states.Evernote.NotAutarizedState import NotAutarizedState
 from services.ServiceBase import ServiceBase
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
-
+# создается для каждого пользователя.
 class SecretaryBase:
     def __init__(self):
         self._state = NotAutarizedState()
@@ -12,9 +12,6 @@ class SecretaryBase:
     #just for fun
     def take_off_blouse(self):
         print('rrRRRrr')
-
-    def log_in(self, login, password):
-        return self._service.log_in(login, password)
 
     def reply(self, data):
         user_id = data['object']['user_id']
