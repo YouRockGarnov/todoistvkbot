@@ -6,7 +6,7 @@ from bots.vkbot import VKBot
 from tools.log import logger
 from app import app
 
-vkbot = VKBot()
+bot = VKBot()
 
 @app.route('/', methods=['POST'])
 def processing():
@@ -29,7 +29,7 @@ def processing():
     elif data['type'] == 'message_new' or data['type'] == 'service_reply':
         logger.info('pulled message: ' + str(data['object']))
 
-        vkbot.reply_to_message(data)
+        bot.reply_to_message(data)
         return 'ok'
 
     return 'ok'
@@ -52,7 +52,7 @@ def debug_processing(data):
     elif data['type'] == 'message_new' or data['type'] == 'service_reply':
         logger.info('pulled message: ' + str(data['object']))
 
-        vkbot.reply_to_message(data)
+        bot.reply_to_message(data)
         return 'ok'
 
     return 'ok'

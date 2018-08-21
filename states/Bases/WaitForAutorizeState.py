@@ -17,9 +17,9 @@ class WaitForAutorizeState(StateBase):
         logger.info('Call WaitForAutorizationState.act()')
 
         success = data['object']['success'] # TODO в success должен записываться ответ сервера
-        self.email = data['object']['title']
+        # self.email = data['object']['title']
 
-        if success:
+        if success == 'True':
             self._messages = ['Авторизация прошла успешно!\n{0}'.format(self._success_autoriz_advice)]
             self._next_state = self.AutorizedState()
 
