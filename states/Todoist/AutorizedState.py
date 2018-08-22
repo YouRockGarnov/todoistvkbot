@@ -7,7 +7,6 @@ class AutorizedState(StateBase):
 
     def act(self, data, service):
         message = data['object']['title']
-
         parsing = self.parse_message(message, service)
 
         result = self._create_message(parsing)
