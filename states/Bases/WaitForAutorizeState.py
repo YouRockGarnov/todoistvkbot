@@ -1,14 +1,15 @@
 from states.Bases.StateBase import StateBase
 from tools.log import logger
 from abc import abstractmethod
+import abc
 
 class WaitForAutorizeState(StateBase):
     def __init__(self):
         super().__init__()
         self._success_autoriz_advice = ''
 
-    @abstractmethod
-    @staticmethod
+    from abc import abstractstaticmethod
+    @abstractstaticmethod
     def AutorizedState():
         # должен возвращать авторизированное состояние
         pass

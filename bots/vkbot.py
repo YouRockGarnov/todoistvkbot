@@ -1,6 +1,6 @@
 from bots.bot_base import BotBase
 import configs.config_vkbot as config
-import tools.vkapi
+import tools.vkapi as vkapi
 
 
 class VKBot(BotBase):

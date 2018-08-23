@@ -1,4 +1,4 @@
-from states.Evernote.NotAutarizedState import NotAutarizedState
+from states.Bases.NotAutarizedState import NotAutarizedState
 from services.ServiceBase import ServiceBase
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 

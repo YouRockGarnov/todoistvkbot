@@ -57,4 +57,4 @@ def debug_processing(data):
 
     return 'ok'
 
-app.run()
+# app.run()

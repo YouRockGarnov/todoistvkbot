@@ -8,7 +8,7 @@ class TodoistNotAutarizedState(NotAutarizedState):
         self._mess_ending = '\nРазрешите нашему приложению доступ к аккаунту.'
 
     def act(self, data, service):
-        super().act()
+        super().act(data, service)
 
         user_id = data['object']['user_id']
         self.messages[0] = self.messages[0].format(user_id=user_id)

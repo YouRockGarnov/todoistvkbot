@@ -1,3 +1,3 @@
-from secretaries.EvernoteSecretary import EvernoteSecretary
+from secretaries.TodoistSecretary import TodoistSecretary
 
-secretary_type = EvernoteSecretary
+secretary_type = TodoistSecretary
