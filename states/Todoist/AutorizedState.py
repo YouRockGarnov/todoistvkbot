@@ -83,6 +83,7 @@ class TodoistAutorizedState(StateBase):
         if 'date' in parsing.keys():
             res_message += 'на {0} '.format(parsing['date'])
 
+        res_message = '{0}.'.format(res_message)
         return res_message
 
     def _merge_messages(self, messages):

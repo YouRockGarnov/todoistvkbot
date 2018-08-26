@@ -10,7 +10,6 @@ import time
 telegram_bot = Telebot()
 bot = telebot.TeleBot(config.token)
 
-
 @async()
 @bot.message_handler(content_types=['text'])
 def user_answer(message):
@@ -20,11 +19,13 @@ def user_answer(message):
     data = preparing_message(message)
     print(data)
     logger.info('pulled message: ' + str(data['object']))
+
     if data['type'] == 'start':
       print(message)
       global telegram_bot
       telegram_bot = Telebot()
       telegram_bot.reply_to_message(data)
+
     elif data['type'] == 'help':
       telegram_bot.send_message(data['object']['user_id'], 'Этот бот создан для того, чтобы вы могли сохранять заметки, не выходя из Telegram! Напишите "/start", '
                                                              'зарегистрируйтесь в системе и пришлите ответным письмом email на который зарегистрировались. '

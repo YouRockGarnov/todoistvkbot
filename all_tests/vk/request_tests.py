@@ -1,4 +1,4 @@
-from tools.debug_process import debug_processing
+from tools.vk_debug_process import debug_processing
 import vkbot_main
 import tools.vkapi as vkapi
 from db.mymodels import *

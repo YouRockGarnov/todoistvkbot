@@ -8,7 +8,7 @@ from app import app
 
 bot = VKBot()
 
-@app.route('/', methods=['POST'])
+@app.route('/VK/Todoist', methods=['POST'])
 def processing():
     # Распаковываем json из пришедшего POST-запроса
 
