@@ -12,7 +12,8 @@ class TodoistAutorizedState(StateBase):
     def act(self, data, service):
         message = data['object']['body']
         user_id = data['object']['user_id']
-        parsing = self.parse_message(data, service)
+        parsing = self.parse_messages(data, service)
+        # parsing = self.parse_fwd_mess(data, service)
 
         result = self._create_message(parsing)
         if self._need_to_ask(parsing):
@@ -30,10 +31,23 @@ class TodoistAutorizedState(StateBase):
 
         self._messages = [result]
 
-    def parse_message(self, data, service):
-        response = {}
-        message = data['object']['body']
+
+    def parse_messages(self, data, service):
         user_id = data['object']['user_id']
+        main_parsing = self._parse_message(data['object']['body'], user_id, service)
+
+        if 'fwd_messages' in data['object']:
+            parsing2 = self.parse_date(self._merge_messages(data['object']['fwd_messages']), user_id, service)
+
+            if 'date' not in main_parsing and 'date' in parsing2:
+                main_parsing['date'] = parsing2['date']
+
+            main_parsing['task'] = '{0}\n\n{1}'.format(main_parsing['task'], parsing2['task'])
+
+        return main_parsing
+
+    def _parse_message(self, message, user_id, service):
+        response = {}
 
         result = self._parse_project(message=message, user_id=user_id, service=service)
         response['project'] = result['project']
@@ -71,6 +85,11 @@ class TodoistAutorizedState(StateBase):
 
         return res_message
 
+    def _merge_messages(self, messages):
+        return messages.join('\n\n')
+
+    def parse_date(self, message, service, user_id):
+        return {}
 
 
 
