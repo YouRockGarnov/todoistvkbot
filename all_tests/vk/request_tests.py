@@ -6,10 +6,11 @@ import time
 from flask import g
 import requests
 from tools.log import logger
-from pytodoist.api import TodoistAPI
+from todoist import TodoistAPI
+from services.TodoistService import TodoistService
 
 main_url = 'https://tattoo-sender.herokuapp.com'
-garnovyd_token = '98a4ba5432236a12f235d457db76c7f4dc0865ed'
+garnovyd_token = '6d8318130bb72124968473a6e269bc3f73cebc0b'
 yury_email = 'garnovyd@gmail.com'
 
 def assertTrue(expr, funcname):
@@ -34,10 +35,15 @@ def test_start():
 
     debug_processing('{"type": "message_new", '
               '"object": {"id": 43, "date": 1492522323, "out": 0, '
-              '"user_id": 142872618, "read_state": 0, '
+              '"user_id": 481116745, "read_state": 0, '
                      '"body": "Привет!"}}')
 
-    acc = Account(login='garnovyd@gmail.com', password='passwordlol')
+    debug_processing('{"type": "message_new", '
+                     '"object": {"id": 43, "date": 1492522323, "out": 0, '
+                     '"user_id": 481116745, "read_state": 0, '
+                     '"success": "True"}}')
+
+    acc = Account(login='garnovyd@gmail.com', password='')
     acc.save()
 
     subs = Subscription(account=acc,
@@ -50,21 +56,71 @@ def test_start():
     token.save()
 
 
-def test_add_task():
+def test_add_indox_task():
     g.db.close()
     content = 'Это новая задача!'
 
     debug_processing('{"type": "message_new", '
               '"object": {"id": 43, "date": 1492522323, "out": 0, '
-              '"user_id": 142872618, "read_state": 0, '
+              '"user_id": 481116745, "read_state": 0, '
                      '"body": "' + content + '"}}')
 
-    api = TodoistAPI()
     acc = Account.get(Account.login == yury_email)
-    user = api.login_with_google(yury_email, AccessToken.get(acc=acc).token)
-    project = user.get_project('Inbox')
-    tasks = project.get_tasks()
 
-    contents = [task.content for task in tasks]
-    assertTrue(content in contents)
+    service = TodoistService()
+    api = TodoistAPI(AccessToken.get(account=acc.id).token)
+    api.sync()
+
+    found_content = [item['content'] for item in  api.items.all() if item['content'] == content
+        and item['project_id'] == service.project_name_to_id(api=api, proj_name='Inbox')][0]
+
+    assertEqual(funcname=test_add_indox_task.__name__, a=found_content, b=content)
     # assertEqual(vkapi.sended_message, 'Я не понял команды. Попробуйте еще раз.', __name__)
+
+    service.delete_task(task=content, proj='Inbox', user_id=481116745)
+
+def test_add_project_task(content, proj_name, task):
+    g.db.close()
+
+    debug_processing('{"type": "message_new", '
+              '"object": {"id": 43, "date": 1492522323, "out": 0, '
+              '"user_id": 481116745, "read_state": 0, '
+                     '"body": "' + content + '"}}')
+
+    acc = Account.get(Account.login == yury_email)
+
+    service = TodoistService()
+    api = TodoistAPI(AccessToken.get(account=acc.id).token)
+    api.sync()
+
+    debug_processing('{"type": "message_new", '
+              '"object": {"id": 43, "date": 1492522323, "out": 0, '
+              '"user_id": 481116745, "read_state": 0, '
+                     '"body": "Ага!"}}')
+
+    api.sync()
+
+    found_content = [item['content'] for item in  api.items.all() if item['content'] == task
+        and item['project_id'] == service.project_name_to_id(api=api, proj_name=proj_name)][0]
+
+    assertEqual(funcname=test_add_indox_task.__name__, a=found_content, b=task)
+    # assertEqual(vkapi.sended_message, 'Я не понял команды. Попробуйте еще раз.', __name__)
+
+    service.delete_task(task=task, proj=proj_name, user_id=481116745)
+
+def test_add_forwarded_mess():
+    service = TodoistService()
+    api = service._api_for_user(481116745)
+    content = "Это пересланная задача?"
+
+    debug_processing('{"type": "message_new", '
+              '"object": {"id": 43,'
+              '"user_id": 481116745,'
+                     '"body": "", '
+                     '"fwd_messages": [{"user_id": 215916134, "date": 1533747040, "body": "Это пересланная задача?"}]}')
+
+    found_content = service.get_task(task_name=content, proj_name='Inbox', user_id=481116745)
+    assertEqual(funcname=test_add_indox_task.__name__, a=found_content, b=content)
+    # assertEqual(vkapi.sended_message, 'Я не понял команды. Попробуйте еще раз.', __name__)
+
+    service.delete_task(task=content, proj='Inbox', user_id=481116745)

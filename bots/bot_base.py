@@ -1,5 +1,6 @@
 from settings import *
 from tools.log import logger
+from secretaries.Secretary import Secretary
 
 # Bot обрабатывает сообщения и отправляет их.
 # Он один на всю программу для конкретного сервиса (один VKBot и один TelegramBot)
@@ -13,7 +14,7 @@ class BotBase:
 
         # если юзер новый, то создаем ему секретаря
         if user_id not in self._secretaries.keys():
-            self._secretaries[user_id] = secretary_type()
+            self._secretaries[user_id] = Secretary(service_type)
 
         # отправляем все сообщения, которые вернула секретарь
         for message in self._secretaries[user_id].reply(data):

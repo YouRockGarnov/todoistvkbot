@@ -1,12 +1,16 @@
 from states.Bases.NotAutarizedState import NotAutarizedState
-from services.ServiceBase import ServiceBase
+from services.TodoistService import TodoistService
+from services.GCalendarService import GCalendarService
+from services.EvernoteService import EvernoteService
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
 # создается для каждого пользователя.
-class SecretaryBase:
-    def __init__(self):
-        self._state = NotAutarizedState()
-        self._service = ServiceBase()
+class Secretary:
+
+
+    def __init__(self, service_type):
+        self._service = service_type()
+        self._state = self._service.get_start_state()
         self._email = None
 
     #just for fun

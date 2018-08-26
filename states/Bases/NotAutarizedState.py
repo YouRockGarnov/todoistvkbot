@@ -8,15 +8,11 @@ class NotAutarizedState(StateBase):
         super().__init__()
         self._mess_ending = ''
 
-    @abstractstaticmethod
-    def WaitForAutorizeState():
-        return WaitForAutorizeState()
-
     def get_default_next_state(self):
-        return self.WaitForAutorizeState()
+        return WaitForAutorizeState()
 
     def act(self, data, service):
         self._messages = ['Рада приветствовать вас. Для продолжения работы необходимо авторизоваться. '
                           'Пройдите по данной ссылке: {0}.\n{1}'.format(service.get_auth_url(), self._mess_ending)]
 
-        self._next_state = self.WaitForAutorizeState()
+        self._next_state = self.get_default_next_state()

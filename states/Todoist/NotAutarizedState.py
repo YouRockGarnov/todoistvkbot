@@ -1,4 +1,4 @@
-from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
+from states.Todoist.WaitForAutorizeState import TodoistWaitForAutorizeState
 from states.Bases.NotAutarizedState import NotAutarizedState
 
 # состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
@@ -6,6 +6,9 @@ class TodoistNotAutarizedState(NotAutarizedState):
     def __init__(self):
         super().__init__()
         self._mess_ending = '\nРазрешите нашему приложению доступ к аккаунту.'
+
+    def get_default_next_state(self):
+        return TodoistWaitForAutorizeState()
 
     def act(self, data, service):
         super().act(data, service)

@@ -1,3 +1,3 @@
-from secretaries.TodoistSecretary import TodoistSecretary
+from services.TodoistService import TodoistService
 
-secretary_type = TodoistSecretary
+service_type = TodoistService
