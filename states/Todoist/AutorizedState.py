@@ -89,8 +89,33 @@ class TodoistAutorizedState(StateBase):
     def _merge_messages(self, messages):
         return messages.join('\n\n')
 
-    def parse_date(self, message, service, user_id):
-        return {}
+    def parse_datetime(self, message, service, user_id) -> dict:
+        weekdays = enumerate(self.['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'])
+        months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+        import re
+
+        if ('завтра' in message or 'сегодня' in message or 'послезавтра' in message or
+            any([day[1] in message for day in weekdays])
+            or len(re.compile('((\d{1,2}[ .\/-]\d{1,2})([ .\/-]\d{4})?)').findall(message)) != 0
+            or len(re.compile('\d{1,2} час[а, ов]').findall(message)) != 0)
+
+    def inflect(self, start_words):
+        cases = ['gent', 'datv', 'accs', 'ablt', 'loct']
+
+        import pymorphy2 as pm
+        morph = pm.MorphAnalyzer()
+
+        start_words = [morph.parse(word) for word in start_words]
+        from itertools import product
+        pairs = product(start_words, cases)
+
+        return [word.inflect({case}) for word, case in pairs]
+
+
+
+
+
+
 
 
 
