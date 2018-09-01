@@ -35,7 +35,7 @@ class TodoistService(ServiceBase):
         projects = api.projects.all()
         return [proj['id'] for proj in projects if proj['name'] == proj_name][0]
 
-    def add_task(self, content, project, date, user_id):
+    def add_task(self, content, project,  user_id, date_string=''):
         api = self._api_for_user(user_id)
         api.items.add(content=content, project_id=self.project_name_to_id(project, api),
                       date_string=date)

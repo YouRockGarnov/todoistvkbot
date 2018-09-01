@@ -39,8 +39,8 @@ class TodoistAutorizedState(StateBase):
         if 'fwd_messages' in data['object']:
             parsing2 = self.parse_date(self._merge_messages(data['object']['fwd_messages']), user_id, service)
 
-            if 'date' not in main_parsing and 'date' in parsing2:
-                main_parsing['date'] = parsing2['date']
+            if 'date_string' not in main_parsing and 'date_string' in parsing2:
+                main_parsing['date_string'] = parsing2['date_string']
 
             main_parsing['task'] = '{0}\n\n{1}'.format(main_parsing['task'], parsing2['task'])
 
@@ -52,6 +52,9 @@ class TodoistAutorizedState(StateBase):
         result = self._parse_project(message=message, user_id=user_id, service=service)
         response['project'] = result['project']
         message = result['edited_message']
+
+        response['date_string'] = self._parse_datetime(message, service, user_id)
+
 
         # TODO добавь проверку есть ли в сообщении дата
 
@@ -89,27 +92,42 @@ class TodoistAutorizedState(StateBase):
     def _merge_messages(self, messages):
         return messages.join('\n\n')
 
-    def parse_datetime(self, message, service, user_id) -> dict:
-        weekdays = enumerate(self.['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'])
-        months = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+    def _parse_datetime(self, message, service, user_id):
+        weekdays = enumerate(self.inflect(['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']))
+        months = self.inflect(['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'])
+        short_m = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
+        short_w = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
         import re
 
-        if ('завтра' in message or 'сегодня' in message or 'послезавтра' in message or
-            any([day[1] in message for day in weekdays])
-            or len(re.compile('((\d{1,2}[ .\/-]\d{1,2})([ .\/-]\d{4})?)').findall(message)) != 0
-            or len(re.compile('\d{1,2} час[а, ов]').findall(message)) != 0)
+        parties = message.split(['.', ','])
+
+        for part in parties:
+            if ('завтра' in part or 'сегодня' in part or 'послезавтра' in part or
+                any([day[1] in part for day in weekdays])
+                or len(re.compile('((\d{1,2}[ .\/-]\d{1,2})([ .\/-]\d{4})?)').findall(part)) != 0
+                or len(re.compile('\d{1,2} чaс[(а)(ов)]').findall(part)) != 0
+                or 'на следующей неделе' in part
+                or any([month in part for month in months])
+                or any([month in part for month in short_m])
+                or any([day in part for day in short_w])
+                or len(re.findall('\d{1,2}-го', part)) != 0
+                or len(re.findall('через \d{1,2}', part)) != 0):
+
+                return {'date_string': part}
+
+        return {}
 
     def inflect(self, start_words):
-        cases = ['gent', 'datv', 'accs', 'ablt', 'loct']
+        cases = ['nomn', 'gent', 'datv', 'accs', 'ablt', 'loct']
 
         import pymorphy2 as pm
         morph = pm.MorphAnalyzer()
 
-        start_words = [morph.parse(word) for word in start_words]
+        start_words = [morph.parse(word)[0] for word in start_words]
         from itertools import product
-        pairs = product(start_words, cases)
+        pairs = list(product(start_words, cases))
 
-        return [word.inflect({case}) for word, case in pairs]
+        return [word.inflect({case})[0] for word, case in pairs]
 
 
 
