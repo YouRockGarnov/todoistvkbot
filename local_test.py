@@ -25,6 +25,8 @@ def test():
 
         tests.test_add_project_task(proj_name='Work', content='Это новая задача в проекте в Work ',
                                     task='Это новая задача в проекте')
+        tests.test_add_forwarded_mess()
+        tests.test_add_task_with_date()
 
         logger.info('All tests are passed!')
         return 'ok'

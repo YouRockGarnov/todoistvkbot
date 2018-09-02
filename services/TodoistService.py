@@ -38,7 +38,7 @@ class TodoistService(ServiceBase):
     def add_task(self, content, project,  user_id, date_string=''):
         api = self._api_for_user(user_id)
         api.items.add(content=content, project_id=self.project_name_to_id(project, api),
-                      date_string=date)
+                      date_string=date_string)
         api.commit()
 
     def delete_task(self, task, proj, user_id):
