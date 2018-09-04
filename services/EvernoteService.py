@@ -5,7 +5,7 @@ import json
 
 
 class EvernoteService(ServiceBase):
-    def add_note(self, messages, title):
+    def add_note(self, messages, title): # old method
         text = str()
         for message in messages:
             text += message

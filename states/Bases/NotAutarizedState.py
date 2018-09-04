@@ -4,11 +4,14 @@ from abc import abstractstaticmethod
 from db.mymodels import Subscription
 from db.business_rules import subscribe_to
 
-# состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
+'''Самое начальное состояние.
+
+'''
+
 class NotAutarizedState(StateBase):
     def __init__(self):
         super().__init__()
-        self._mess_ending = ''
+        self._mess_ending = '' # что вывести после ссылки.
 
     def get_default_next_state(self):
         return WaitForAutorizeState()

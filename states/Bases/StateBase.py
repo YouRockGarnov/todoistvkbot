@@ -1,6 +1,11 @@
 from tools.log import logger
 from abc import ABCMeta, abstractmethod
 
+'''Состояния - инструмент для секретарей, реализующие логику работы.
+
+Для каждого типа секретаря свои состояния.
+Cостояния позволяют не делать тысячу ифов, а сделать это в стиле ООП.
+'''
 class StateBase(metaclass=ABCMeta):
     def __init__(self):
         logger.info('StateBase.__init__()')

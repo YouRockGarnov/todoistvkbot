@@ -1,3 +1,11 @@
+import functools
+
+'''Если дебаг включен, то бот не будет отсылать сообщения пользователям и взаимодействовать с ними.
+
+Создано для того, чтобы дебажить на локалке.
+НИКОГДА НЕ ЗАГРУЖАЙТЕ НА СЕРВЕР С DEBUG = True
+'''
+
 DEBUG = True
 
 def getDEBUG():
@@ -16,4 +24,3 @@ def setDEBUG(bool):
 #         return func(*args, **kwargs)
 #
 #     return wrapped
-

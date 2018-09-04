@@ -18,4 +18,4 @@ class AutorizedState(StateBase):
             self._messages = ['Я добавила это событие.']
         # TODO добавить вопрос к пользователю о корректности добавления события
 
-        self._next_state = self
+        self._next_state = self # ибо состояние уже "конечное"

@@ -2,8 +2,14 @@ from settings import *
 from tools.log import logger
 from secretaries.Secretary import Secretary
 
-# Bot обрабатывает сообщения и отправляет их.
-# Он один на всю программу для конкретного сервиса (один VKBot и один TelegramBot)
+'''Родительский класс для ботов
+
+Бот должен быть один в программе. 
+Он является посредником  между нужным api и нашей системой.
+В терминах MVP Bot - то View.
+Бот создается в main соответствующего месседжера.
+'''
+
 class BotBase:
     def __init__(self):
         self._secretaries = dict() # для каждого пользователя (id) свой секретарь

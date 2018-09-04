@@ -6,7 +6,7 @@ import abc
 class WaitForAutorizeState(StateBase):
     def __init__(self):
         super().__init__()
-        self._success_autoriz_advice = ''
+        self._success_autoriz_advice = '' # что вывести после сообщения об успешной авторизации
 
     @abc.abstractmethod
     def get_default_next_state(self):
