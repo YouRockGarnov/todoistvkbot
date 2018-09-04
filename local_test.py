@@ -15,18 +15,19 @@ def test():
 
         import all_tests.vk.request_tests as tests
 
-        g.db.drop_tables([Account, Subscription, Messenger, AccessToken], safe=True)
+        g.db.drop_tables([Account, Subscription, Messenger, AccessToken])
         create_db()
 
         tests.test_start()
-        tests.test_add_indox_task()
-        tests.test_add_project_task(proj_name='Work', content='В Work это новая задача в проекте',
-                                    task='это новая задача в проекте')
-
-        tests.test_add_project_task(proj_name='Work', content='Это новая задача в проекте в Work ',
-                                    task='Это новая задача в проекте')
-        tests.test_add_forwarded_mess()
-        tests.test_add_task_with_date()
+        tests.test_redirecting()
+        # tests.test_add_indox_task()
+        # tests.test_add_project_task(proj_name='Work', content='В Work это новая задача в проекте',
+        #                             task='это новая задача в проекте')
+        #
+        # tests.test_add_project_task(proj_name='Work', content='Это новая задача в проекте в Work ',
+        #                             task='Это новая задача в проекте')
+        # tests.test_add_forwarded_mess()
+        # tests.test_add_task_with_date()
 
         logger.info('All tests are passed!')
         return 'ok'

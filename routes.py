@@ -36,4 +36,4 @@ def todoist_redirect():
             data['object']['success'] = 'False'
 
         global bot # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
-        bot.reply_to_message(data)
+        bot.reply_to_message(data) # шлем боту сообщение с флагом success

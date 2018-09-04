@@ -1,6 +1,8 @@
 from states.Bases.StateBase import StateBase
 from states.Bases.WaitForAutorizeState import WaitForAutorizeState
 from abc import abstractstaticmethod
+from db.mymodels import Subscription
+from db.business_rules import subscribe_to
 
 # состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
 class NotAutarizedState(StateBase):
@@ -12,6 +14,7 @@ class NotAutarizedState(StateBase):
         return WaitForAutorizeState()
 
     def act(self, data, service):
+        subscribe_to(data['messenger'], service.name)
         self._messages = ['Рада приветствовать вас. Для продолжения работы необходимо авторизоваться. '
                           'Пройдите по данной ссылке: {0}.\n{1}'.format(service.get_auth_url(), self._mess_ending)]
 

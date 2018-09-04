@@ -29,6 +29,9 @@ def processing():
     elif data['type'] == 'message_new' or data['type'] == 'service_reply':
         logger.info('pulled message: ' + str(data['object']))
 
+        from tools.constants import Messenger
+        data['messenger'] = Messenger.VK
+
         bot.reply_to_message(data)
         return 'ok'
 

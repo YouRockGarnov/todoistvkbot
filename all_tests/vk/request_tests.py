@@ -1,4 +1,5 @@
 from tools.vk_debug_process import debug_processing
+from tools.vk_debug_process import debug_todoist_redirect
 import vkbot_main
 import tools.vkapi as vkapi
 from db.mymodels import *
@@ -30,18 +31,27 @@ def make_req(message):
         logger.error('POST request to {0} with message = {1} returned {2}.'.format(main_url, message, response))
         exit(1)
 
+def test_redirecting():
+    debug_todoist_redirect({'state': 481116745, 'code': input()})
+
 def test_start():
     g.db.close()
+    # Симуляция того, что человек авторизуется
+
+    TEST_REDIRECTING = True # надо будет открыть ссылку в браузере и ввести code из адресной строки
 
     debug_processing('{"type": "message_new", '
               '"object": {"id": 43, "date": 1492522323, "out": 0, '
               '"user_id": 481116745, "read_state": 0, '
                      '"body": "Привет!"}}')
 
-    debug_processing('{"type": "message_new", '
-                     '"object": {"id": 43, "date": 1492522323, "out": 0, '
-                     '"user_id": 481116745, "read_state": 0, '
-                     '"success": "True"}}')
+    if TEST_REDIRECTING:
+        test_redirecting()
+    else:
+        debug_processing('{"type": "message_new", '
+                         '"object": {"id": 43, "date": 1492522323, "out": 0, '
+                         '"user_id": 481116745, "read_state": 0, '
+                         '"success": "True"}}')
 
     acc = Account(login='garnovyd@gmail.com', password='')
     acc.save()

@@ -1,5 +1,5 @@
 from tools.log import logger
-from abc import abstractmethod
+from abc import abstractstaticmethod
 import abc
 
 
@@ -8,8 +8,9 @@ class ServiceBase:
 
     def __init__(self):
         self._email = None
+        self._name = None
 
-    @abstractmethod
+    @abstractstaticmethod
     def get_auth_url():
         logger.info('call "get_autorize_url"')
         return 'servicebase url'
@@ -17,6 +18,10 @@ class ServiceBase:
     def set_email(self, email):
         self._email = email
         # self._connect_to_service()
+
+    @property
+    def name(self):
+        return self._name
 
     email = property()
     email = email.setter(set_email)

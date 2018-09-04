@@ -18,6 +18,10 @@ class TodoistService(ServiceBase):
     def get_start_state():
         return TodoistNotAutarizedState()
 
+    def invalid_token_protect(self, func):
+        def wrapped(*args, **kwargs):
+            pass
+
     def _api_for_user(self, user_id):
         acc = Subscription.get(Subscription.messenger_user_id == user_id).account
         api = TodoistAPI(AccessToken.get(AccessToken.account == acc).token)

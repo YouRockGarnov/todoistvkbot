@@ -6,8 +6,6 @@ from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
 # создается для каждого пользователя.
 class Secretary:
-
-
     def __init__(self, service_type):
         self._service = service_type()
         self._state = self._service.get_start_state()
@@ -20,15 +18,23 @@ class Secretary:
     def reply(self, data):
         user_id = data['object']['user_id']
 
-        self._state.act(data, self._service)
+        from tools.exceptions import ManualException
+        try:
+            self._state.act(data, self._service)
 
-        # в этом состоянии должен вернуться емейл
-        if type(self._state) == WaitForAutorizeState:
-            self._email = self._state.email
-            self._service.set_email(self._email)
+            # в этом состоянии должен вернуться емейл
+            if type(self._state) == WaitForAutorizeState:
+                self._email = self._state.email
+                self._service.set_email(self._email)
 
-        messages = self._state._messages
-        self._state = self._state.next_state # заменяем текущее состояние следующим
+            messages = self._state._messages
+            self._state = self._state.next_state  # заменяем текущее состояние следующим
 
-        for message in messages:
-            yield message
+            for message in messages:
+                yield message
+
+        except ManualException as ex:
+            yield ex.message
+
+
+
