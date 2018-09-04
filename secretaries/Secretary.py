@@ -4,7 +4,13 @@ from services.GCalendarService import GCalendarService
 from services.EvernoteService import EvernoteService
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
 
-# создается для каждого пользователя.
+'''Секретарь занимается логикой взаимодействия с пользователем.
+
+Общается с пользователем именно этот класс.
+Общение осуществляется с помощью состояний (по сути секретарь просто ходит по автомату.
+В териминах MVP Secretary - это Presenter.
+Для каждого пользователя отдельный секретарь
+'''
 class Secretary:
     def __init__(self, service_type):
         self._service = service_type()
