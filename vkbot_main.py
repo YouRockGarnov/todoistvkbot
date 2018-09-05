@@ -8,6 +8,10 @@ from app import app
 
 bot = VKBot()
 
+@app.route('/', methods=['GET'])
+def describe():
+    return 'Это TodoistVKBot'
+
 @app.route('/VK/Todoist', methods=['POST'])
 def processing():
     # Распаковываем json из пришедшего POST-запроса
@@ -37,27 +41,5 @@ def processing():
 
     return 'ok'
 
-def debug_processing(data):
-    # Распаковываем json из пришедшего POST-запроса
-
-    print('processing')
-
-    if DEBUG:
-        logger.info('Run in debug')
-
-    # Вконтакте в своих запросах всегда отправляет поле типа
-    if 'type' not in data.keys():
-        return 'not vk'
-
-    if data['type'] == 'confirmation':
-        return confirmation_token
-
-    elif data['type'] == 'message_new' or data['type'] == 'service_reply':
-        logger.info('pulled message: ' + str(data['object']))
-
-        bot.reply_to_message(data)
-        return 'ok'
-
-    return 'ok'
-
-# app.run() # запускает приложение
+if __name__ == "__main__":
+    app.run() # запускает приложение

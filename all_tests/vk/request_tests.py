@@ -40,7 +40,7 @@ def test_start():
 
     TEST_REDIRECTING = True # надо будет открыть ссылку в браузере и ввести code из адресной строки
 
-    debug_processing('{"type": "message_new", '
+    debug_processing('{"type": "message_new", "messenger": "VK",'
               '"object": {"id": 43, "date": 1492522323, "out": 0, '
               '"user_id": 481116745, "read_state": 0, '
                      '"body": "Привет!"}}')
@@ -53,17 +53,17 @@ def test_start():
                          '"user_id": 481116745, "read_state": 0, '
                          '"success": "True"}}')
 
-    acc = Account(login='garnovyd@gmail.com', password='')
-    acc.save()
+        acc = Account(login='garnovyd@gmail.com', password='')
+        acc.save()
 
-    subs = Subscription(account=acc,
-                     messenger=Messenger.get(Messenger.name == 'VK'),
-                     subscr_type='free',
-                     messenger_user_id=481116745)
-    subs.save()
+        subs = Subscription(account=acc,
+                            messenger=Messenger.get(Messenger.name == 'VK'),
+                            subscr_type='free',
+                            messenger_user_id=481116745)
+        subs.save()
 
-    token = AccessToken(service='Todoist', account=acc, token=garnovyd_token)
-    token.save()
+        token = AccessToken(service='Todoist', account=acc, token=garnovyd_token)
+        token.save()
 
 
 def test_add_indox_task():
@@ -75,7 +75,7 @@ def test_add_indox_task():
               '"user_id": 481116745, "read_state": 0, '
                      '"body": "' + content + '"}}')
 
-    acc = Account.get(Account.login == yury_email)
+    acc = Subscription.get(Subscription.messenger_user_id == 481116745).account
 
     service = TodoistService()
     api = TodoistAPI(AccessToken.get(account=acc.id).token)
@@ -97,7 +97,7 @@ def test_add_project_task(content, proj_name, task):
               '"user_id": 481116745, "read_state": 0, '
                      '"body": "' + content + '"}}')
 
-    acc = Account.get(Account.login == yury_email)
+    acc = Subscription.get(Subscription.messenger_user_id == 481116745).account
 
     service = TodoistService()
     api = TodoistAPI(AccessToken.get(account=acc.id).token)
@@ -139,8 +139,8 @@ def test_add_task_with_date():
     from time import sleep
     import datetime as dt
 
-    add_task('1', '', 'завтра', 'day', dt.datetime.now() + dt.timedelta(days=1))
-    add_task('2', '', 'сегодня в 19 часов', 'hour', )
+    add_task('1', '', 'завтра', 'day')
+    add_task('2', '', 'сегодня в 19 часов', 'hour' )
     add_task('3', 'Work', 'через 3 дня', 'day')
     add_task('4', 'Work', 'на следующей неделе', 'day')
     add_task('5', 'Work', '26/10/2050', 'day')
@@ -170,7 +170,7 @@ def add_task(task, project='', date_string='', accuracy='day', due_datetime=''):
                          '"body": "Ага!"}}')
 
     time.sleep(1)
-    acc = Account.get(Account.login == yury_email)
+    acc = Subscription.get(Subscription.messenger_user_id == 481116745).account
 
     service = TodoistService()
     api = TodoistAPI(AccessToken.get(account=acc.id).token)

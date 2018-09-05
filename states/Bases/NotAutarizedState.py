@@ -17,7 +17,7 @@ class NotAutarizedState(StateBase):
         return WaitForAutorizeState()
 
     def act(self, data, service):
-        subscribe_to(data['messenger'], service.name)
+        subscribe_to(data['messenger'], data['object']['user_id'])
         self._messages = ['Рада приветствовать вас. Для продолжения работы необходимо авторизоваться. '
                           'Пройдите по данной ссылке: {0}.\n{1}'.format(service.get_auth_url(), self._mess_ending)]
 

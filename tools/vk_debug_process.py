@@ -4,7 +4,7 @@ from tools.log import logger, logged
 from vkbot_main import bot
 import json
 import requests
-from db.mymodels import Subscription
+from db.mymodels import Subscription, AccessToken
 from flask import g
 
 def debug_processing(strdata):
@@ -52,12 +52,12 @@ def debug_todoist_redirect(args):
             response = requests.post('https://todoist.com/oauth/access_token', sending_args)
 
             import json
-            access_token = json.loads(response.text)['access_token']
-            subsss = Subscription.get()
-            subs = Subscription.select().where(Subscription.messenger_user_id == user_id).get()
+            str_access_token = json.loads(response.text)['access_token']
 
-            subs.access_token = access_token
-            subs.save()
+            subs = Subscription.get(Subscription.messenger_user_id == user_id)
+            acc = subs.account
+            access_token = AccessToken(account=acc, token=str_access_token, service='Todoist')
+            access_token.save()
 
         except Exception as ex:
             import sys

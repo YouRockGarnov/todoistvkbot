@@ -28,7 +28,7 @@ class Messenger(Model):
         database = db_proxy
 
 class Subscription(Model):
-    account = ForeignKeyField(Account, to_field='id')
+    account = ForeignKeyField(Account, to_field='id', null=True)
     messenger = ForeignKeyField(Messenger, to_field='id')
     subscr_type = TextField() # free, full
     messenger_user_id = IntegerField()
