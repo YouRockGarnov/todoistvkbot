@@ -14,32 +14,35 @@ def describe():
 
 @app.route('/VK/Todoist', methods=['POST'])
 def processing():
-    # Распаковываем json из пришедшего POST-запроса
+    try:
+        # Распаковываем json из пришедшего POST-запроса
 
-    logger.info('processing')
+        logger.info('processing')
 
-    if DEBUG:
-        logger.info('Run in debug')
+        if DEBUG:
+            logger.info('Run in debug')
 
-    data = json.loads(request.data)
+        data = json.loads(request.data)
 
-    # Вконтакте в своих запросах всегда отправляет поле типа
-    if 'type' not in data.keys():
-        return 'not vk'
+        # Вконтакте в своих запросах всегда отправляет поле типа
+        if 'type' not in data.keys():
+            return 'not vk'
 
-    if data['type'] == 'confirmation':
-        return confirmation_token
+        if data['type'] == 'confirmation':
+            return confirmation_token
 
-    elif data['type'] == 'message_new' or data['type'] == 'service_reply':
-        logger.info('pulled message: ' + str(data['object']))
+        elif data['type'] == 'message_new' or data['type'] == 'service_reply':
+            logger.info('pulled message: ' + str(data['object']))
 
-        from tools.constants import Messenger
-        data['messenger'] = Messenger.VK
+            from tools.constants import Messenger
+            data['messenger'] = Messenger.VK
 
-        bot.reply_to_message(data)
+            bot.reply_to_message(data)
+            return 'ok'
+
         return 'ok'
-
-    return 'ok'
+    except Exception as e:
+        logger.error("Fatal error in main loop", exc_info=True)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0') # запускает приложение
