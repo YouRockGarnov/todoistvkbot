@@ -42,4 +42,4 @@ def processing():
     return 'ok'
 
 if __name__ == "__main__":
-    app.run() # запускает приложение
+    app.run(host='0.0.0.0') # запускает приложение
