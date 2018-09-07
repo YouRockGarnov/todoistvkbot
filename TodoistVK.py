@@ -22,7 +22,9 @@ def processing():
         if DEBUG:
             logger.info('Run in debug')
 
+        logger.info(request.data)
         data = json.loads(request.data)
+        logger.info(data)
 
         # Вконтакте в своих запросах всегда отправляет поле типа
         if 'type' not in data.keys():
