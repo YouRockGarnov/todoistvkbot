@@ -10,7 +10,7 @@ bot = VKBot()
 
 @app.route('/', methods=['GET'])
 def describe():
-    return 'Это TodoistVKBot'
+    return 'Это TodoistVKBot!!!'
 
 @app.route('/VK/Todoist', methods=['POST'])
 def processing():
