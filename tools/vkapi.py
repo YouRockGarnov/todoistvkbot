@@ -19,7 +19,7 @@ auth_link = '''https://oauth.vk.com/authorize?client_id={app_id}
                    notifications,stats,ads,offline,docs,pages,stats,
                    notifications&response_type=token '''.format(app_id=_app_id_for_auth)  # TODO INSERT CORRECT TOKEN
 
-
+@logged
 def send_message(user_id, token, message, attachment=""):
     logger.info('send \"' + message.encode().decode("utf-8",'replace') + ' \" to ' + str(user_id))
 
