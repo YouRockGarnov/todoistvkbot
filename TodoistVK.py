@@ -49,12 +49,14 @@ def get_debug():
 @app.route('/create_db', methods=['GET'])
 @logged
 def create_db():
-    return creating_scratch.create_db()
+    creating_scratch.create_db()
+    return 'ok'
 
 @app.route('/reset_db', methods=['GET'])
 @logged
 def reset_db():
-    return creating_scratch.reset_db()
+    creating_scratch.reset_db()
+    return 'ok'
 
 @app.route('/VK/Todoist', methods=['POST'])
 def processing():

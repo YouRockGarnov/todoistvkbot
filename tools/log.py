@@ -28,7 +28,7 @@ def logged(func):
             result = func(*args, **kwargs)
             logger.info('Exit from function {0}'.format(repr(func)))
         except Exception as e:
-            logger.error("Fatal error in main loop", exc_info=True)
+            logger.error("Fatal error in main loop, args: " + args, exc_info=True)
 
         return result
 
