@@ -23,9 +23,12 @@ def logged(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        logger.info('Enter to function {0}'.format(repr(func)))
-        result = func(*args, **kwargs)
-        logger.info('Exit from function {0}'.format(repr(func)))
+        try:
+            logger.info('Enter to function {0}'.format(repr(func)))
+            result = func(*args, **kwargs)
+            logger.info('Exit from function {0}'.format(repr(func)))
+        except Exception as e:
+            logger.error("Fatal error in main loop", exc_info=True)
 
         return result
 

@@ -3,7 +3,7 @@ from configs.config_vkbot import *
 from settings import *
 import tools.debug as debug_module
 from bots.vkbot import VKBot
-from tools.log import logger
+from tools.log import logger, logged
 from app import app
 from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
@@ -15,37 +15,44 @@ def describe():
     return 'Это TodoistVKBot!!!'
 
 @app.before_request
+@logged
 def before_request():
     init_db()
     g.db = db_proxy
     g.db.connect()
 
 @app.after_request
+@logged
 def after_request(response):
     g.db.close()
     return response
 
 @app.route('/setDEBUG_True', methods=['GET'])
+@logged
 def setDEBUG_True():
     debug_module.setDEBUG(True)
     return 'DEBUG = True'
 
 @app.route('/setDEBUG_False', methods=['GET'])
+@logged
 def setDEBUG_False():
     debug_module.setDEBUG(False)
     return 'DEBUG = False'
 
 @app.route('/getDEBUG_Flag', methods=['GET'])
+@logged
 def get_debug():
     print(debug_module.getDEBUG())
     return 'DEBUG = {0}'.format(debug_module.getDEBUG())
 
 
 @app.route('/create_db', methods=['GET'])
+@logged
 def create_db():
     return creating_scratch.create_db()
 
 @app.route('/reset_db', methods=['GET'])
+@logged
 def reset_db():
     return creating_scratch.reset_db()
 
