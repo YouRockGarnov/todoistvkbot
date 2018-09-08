@@ -59,38 +59,36 @@ def reset_db():
     return 'ok'
 
 @app.route('/VK/Todoist', methods=['POST'])
+@logged
 def processing():
-    try:
-        # Распаковываем json из пришедшего POST-запроса
+    # Распаковываем json из пришедшего POST-запроса
 
-        logger.info('processing')
+    logger.info('processing')
 
-        if debug_module.getDEBUG():
-            logger.info('Run in debug')
+    if debug_module.getDEBUG():
+        logger.info('Run in debug')
 
-        logger.info(request.data)
-        data = json.loads(request.data)
-        logger.info(data)
+    logger.info(request.data)
+    data = json.loads(request.data)
+    logger.info(data)
 
-        # Вконтакте в своих запросах всегда отправляет поле типа
-        if 'type' not in data.keys():
-            return 'not vk'
+    # Вконтакте в своих запросах всегда отправляет поле типа
+    if 'type' not in data.keys():
+        return 'not vk'
 
-        if data['type'] == 'confirmation':
-            return confirmation_token
+    if data['type'] == 'confirmation':
+        return confirmation_token
 
-        elif data['type'] == 'message_new' or data['type'] == 'service_reply':
-            logger.info('pulled message: ' + str(data['object']))
+    elif data['type'] == 'message_new' or data['type'] == 'service_reply':
+        logger.info('pulled message: ' + str(data['object']))
 
-            from tools.constants import Messenger
-            data['messenger'] = Messenger.VK
+        from tools.constants import Messenger
+        data['messenger'] = Messenger.VK
 
-            bot.reply_to_message(data)
-            return 'ok'
-
+        bot.reply_to_message(data)
         return 'ok'
-    except Exception as e:
-        logger.error("Fatal error in main loop", exc_info=True)
+
+    return 'ok'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0') # запускает приложение
