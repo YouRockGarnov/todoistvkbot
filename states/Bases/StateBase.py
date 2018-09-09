@@ -28,7 +28,8 @@ class StateBase(metaclass=ABCMeta):
         pass
 
     # какое следующее состояние
-    @logged
+
     @property
+    @logged
     def next_state(self):
         return self._next_state

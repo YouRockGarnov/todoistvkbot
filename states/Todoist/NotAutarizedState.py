@@ -14,7 +14,7 @@ class TodoistNotAutarizedState(NotAutarizedState):
         super().act(data, service)
 
         user_id = data['object']['user_id']
-        self.messages[0] = self.messages[0].format(user_id=user_id)
+        self._messages[0] = self._messages[0].format(user_id=user_id)
             # я кидаю в url state=user_id - чтобы знать на какого пользователя пришел ответ от todoists
 
         from services.TodoistService import TodoistService

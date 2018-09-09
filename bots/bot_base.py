@@ -17,7 +17,7 @@ class BotBase:
     def reply_to_message(self, data):
         logger.info('call "bot.reply_to_message')
 
-        1/0
+        # 1/0
 
         user_id = data['object']['user_id']
 
