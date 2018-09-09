@@ -1,6 +1,6 @@
 from tools.vk_debug_process import debug_processing
 from tools.vk_debug_process import debug_todoist_redirect
-import vkbot_main
+import TodoistVK
 import tools.vkapi as vkapi
 from db.mymodels import *
 import time

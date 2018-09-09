@@ -1,5 +1,5 @@
 from settings import *
-from tools.log import logger
+from tools.log import logger, logged
 from secretaries.Secretary import Secretary
 
 '''Родительский класс для ботов
@@ -16,6 +16,9 @@ class BotBase:
 
     def reply_to_message(self, data):
         logger.info('call "bot.reply_to_message')
+
+        1/0
+
         user_id = data['object']['user_id']
 
         # если юзер новый, то создаем ему секретаря

@@ -1,4 +1,4 @@
-from tools.log import logger
+from tools.log import logger, logged
 from abc import ABCMeta, abstractmethod
 
 '''Состояния - инструмент для секретарей, реализующие логику работы.
@@ -16,16 +16,19 @@ class StateBase(metaclass=ABCMeta):
         self._next_state = self.get_default_next_state()
 
     # какие сообщения возвращает state после act(). Можно было бы просто в act() возвращать json, но это не гибко.
+    @logged
     @property
     def messages(self):
         return self._messages
 
     # чтобы не было тупых ошибок - если не реализовать - заругается
+    @logged
     @abstractmethod
     def get_default_next_state(self):
         pass
 
     # какое следующее состояние
+    @logged
     @property
     def next_state(self):
         return self._next_state

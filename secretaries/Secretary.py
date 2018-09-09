@@ -1,8 +1,5 @@
-from states.Bases.NotAutarizedState import NotAutarizedState
-from services.TodoistService import TodoistService
-from services.GCalendarService import GCalendarService
-from services.EvernoteService import EvernoteService
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
+from tools.log import logged
 
 '''Секретарь занимается логикой взаимодействия с пользователем.
 
@@ -21,6 +18,7 @@ class Secretary:
     def take_off_blouse(self):
         print('rrRRRrr')
 
+    @logged
     def reply(self, data):
         user_id = data['object']['user_id']
 
