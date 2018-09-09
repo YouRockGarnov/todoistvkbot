@@ -25,6 +25,9 @@ def debug_processing(strdata):
     elif data['type'] == 'message_new' or data['type'] == 'service_reply':
         logger.info('pulled message: ' + str(data['object']))
 
+        from tools.constants import Messenger
+        data['messenger'] = Messenger.VK.name
+
         bot.reply_to_message(data)
         return 'ok'
 

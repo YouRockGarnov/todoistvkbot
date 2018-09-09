@@ -1,3 +1,5 @@
-from collections import namedtuple
+from enum import Enum
 
-Messenger = namedtuple('Messenger', ['VK', 'Telegram'])
+class Messenger(Enum):
+    VK = 1
+    Telegram = 2
