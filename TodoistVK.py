@@ -83,7 +83,7 @@ def processing():
         logger.info('pulled message: ' + str(data['object']))
 
         from tools.constants import Messenger
-        data['messenger'] = Messenger.VK
+        data['messenger'] = Messenger.VK.name
 
         bot.reply_to_message(data)
         return 'ok'
