@@ -24,7 +24,7 @@ def logged(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         try:
-            logger.info('Enter to function {0}'.format(repr(func)))
+            logger.info('Enter to function {0} with args {1}'.format(repr(func), repr(args)))
             result = func(*args, **kwargs)
             logger.info('Exit from function {0}'.format(repr(func)))
         except Exception as e:
