@@ -42,7 +42,7 @@ def setDEBUG_False():
 @app.route('/getDEBUG_Flag', methods=['GET'])
 @logged
 def get_debug():
-    print(debug_module.getDEBUG())
+    logger.info(debug_module.getDEBUG())
     return 'DEBUG = {0}'.format(debug_module.getDEBUG())
 
 
