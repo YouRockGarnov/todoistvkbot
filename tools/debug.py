@@ -6,7 +6,7 @@ import functools
 НИКОГДА НЕ ЗАГРУЖАЙТЕ НА СЕРВЕР С DEBUG = True
 '''
 
-DEBUG = True
+DEBUG = False
 
 def getDEBUG():
     global DEBUG
