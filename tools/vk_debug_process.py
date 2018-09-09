@@ -26,7 +26,7 @@ def debug_processing(strdata):
         logger.info('pulled message: ' + str(data['object']))
 
         from tools.constants import Messenger
-        data['messenger'] = Messenger.VK.name
+        data['messenger'] = str(Messenger.VK.name)
 
         bot.reply_to_message(data)
         return 'ok'
