@@ -5,7 +5,7 @@ from flask import g
 from db.mymodels import Subscription, AccessToken
 from tools.log import logger, logged
 
-@app.route('/todoist_redirect')
+@app.route('/todoist_redirect', methods=['GET', 'POST'])
 @logged
 def todoist_redirect():
     args = request.args
