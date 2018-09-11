@@ -41,3 +41,7 @@ def todoist_redirect():
 
         global bot  # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
         bot.reply_to_message(data)  # шлем боту сообщение с флагом success
+
+@app.route('/todoist_check', methods=['GET'])
+def check():
+    return 'Это CHECK!!!'
