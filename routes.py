@@ -5,8 +5,8 @@ from flask import g
 from db.mymodels import Subscription, AccessToken
 from tools.log import logger, logged
 
-@logged
 @app.route('/todoist_redirect')
+@logged
 def todoist_redirect():
     args = request.args
     user_id = args['state'] # state по совместительству и user_id, см. TodoistService
@@ -14,7 +14,7 @@ def todoist_redirect():
     data = {'object': {
         'user_id': user_id,
         'success': 'True'
-    }
+        }
     }
 
     from services.TodoistService import TodoistService
