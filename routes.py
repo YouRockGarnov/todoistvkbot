@@ -18,6 +18,8 @@ def todoist_redirect():
     }
 
     from services.TodoistService import TodoistService
+    logger.info(TodoistService.state_pull)
+    logger.info(args)
     if args['state'] in TodoistService.state_pull:
         try:
             sending_args = {'client_id': 'fb26051eb06649bb968791f3d7c2f185',
