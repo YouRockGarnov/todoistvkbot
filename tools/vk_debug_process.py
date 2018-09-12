@@ -1,7 +1,7 @@
 from configs.config_vkbot import confirmation_token
 from db.mymodels import db_proxy
 from tools.log import logger, logged
-from TodoistVK import bot
+from app import bot
 import json
 import requests
 from db.mymodels import Subscription, AccessToken

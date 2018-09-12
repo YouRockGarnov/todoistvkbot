@@ -1,15 +1,10 @@
-from flask import Flask, request, json, g
+from flask import request, json, g
 from configs.config_vkbot import *
-from settings import *
 import tools.debug as debug_module
-from bots.vkbot import VKBot
 from tools.log import logger, logged
-from app import app
+from app import app, bot
 from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
-from routes import todoist_redirect
-
-bot = VKBot()
 
 @app.route('/', methods=['GET'])
 def describe():
