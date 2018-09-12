@@ -9,7 +9,10 @@ from tools.log import logger, logged
 from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
 
+
 app = Flask(__name__)
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 @app.route('/add_bot', methods=['GET'])
 @logged
