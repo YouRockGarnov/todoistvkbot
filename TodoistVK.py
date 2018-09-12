@@ -65,6 +65,7 @@ def processing():
     # Распаковываем json из пришедшего POST-запроса
 
     logger.info('processing')
+    logger.info(g.todoist_state_pull)
 
     if debug_module.getDEBUG():
         logger.info('Run in debug')

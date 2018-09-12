@@ -48,8 +48,6 @@ def todoist_redirect():
 
     return '<a href="javascript:close_window();">close</a>'
 
-    # TODO НЕТ ВЕТКИ ELSE, В ЭТОМ СЛУЧАЕ НАДО ЧТО-ТО ВОЗВРАЩАТЬ
-
 @app.route('/todoist_check', methods=['GET'])
 def check():
     return 'Это CHECK!!!'
