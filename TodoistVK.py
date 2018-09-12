@@ -1,11 +1,16 @@
-from flask import request, json, g
+import requests
+from flask import request, json, g, Flask
+
+from bots.vkbot import VKBot
 from configs.config_vkbot import *
 import tools.debug as debug_module
+from db.mymodels import Subscription, AccessToken
 from tools.log import logger, logged
-from app import app, bot
 from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
-from routes import todoist_redirect
+
+app = Flask(__name__)
+bot = VKBot()
 
 @app.route('/', methods=['GET'])
 def describe():
@@ -87,6 +92,47 @@ def processing():
         return 'ok'
 
     return 'ok'
+
+@app.route('/todoist_redirect', methods=['GET', 'POST'])
+@logged
+def todoist_redirect():
+    args = request.args
+    user_id = args['state'] # state по совместительству и user_id, см. TodoistService
+
+    data = {'object': {
+        'user_id': user_id,
+        'success': 'True'
+        }
+    }
+
+    # TODO ADD CHECK EXISTANCE OF STATE (МОЖЕТ ЭТО ПОДДЕЛЬНЫЙ ЗАПРОС)
+
+    logger.info(args)
+    try:
+        sending_args = {'client_id': 'fb26051eb06649bb968791f3d7c2f185',
+                        'client_secret': '9d853dc5aba9490780682f159ff5c611',
+                        'code': args['code']}
+
+        response = requests.post('https://todoist.com/oauth/access_token', sending_args)
+
+        import json
+        str_access_token = json.loads(response.text)['access_token']
+
+        subs = Subscription.get(Subscription.messenger_user_id == user_id)
+        acc = subs.account
+        access_token = AccessToken(account=acc, token=str_access_token, service='Todoist')
+        access_token.save()
+
+    except Exception as ex:
+        import sys
+        logger.error(sys.exc_info())
+        data['object']['success'] = 'False'
+
+    global bot  # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
+    bot.reply_to_message(data)  # шлем боту сообщение с флагом success
+
+    return '<a href="javascript:close_window();">close</a>'
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0') # запускает приложение

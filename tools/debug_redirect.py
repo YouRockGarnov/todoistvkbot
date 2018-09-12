@@ -1,4 +1,4 @@
-from app import app
+from TodoistVK import app
 from flask import request
 import requests
 from flask import g

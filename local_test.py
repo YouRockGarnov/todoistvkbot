@@ -1,6 +1,6 @@
 from db.mymodels import *
 from flask import Flask, json, request, g
-from app import app
+from TodoistVK import app
 from db.creating_scratch import create_db
 from tools.log import logger
 from tools.debug import setDEBUG
