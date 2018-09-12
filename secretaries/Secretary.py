@@ -1,5 +1,5 @@
 from states.Evernote.WaitForAutorizeState import WaitForAutorizeState
-from tools.log import logged
+from tools.log import logged, logger
 
 '''Секретарь занимается логикой взаимодействия с пользователем.
 
@@ -33,6 +33,8 @@ class Secretary:
 
             messages = self._state._messages
             self._state = self._state.next_state  # заменяем текущее состояние следующим
+
+            logger.info(self._state)
 
             for message in messages:
                 yield message
