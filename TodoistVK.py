@@ -10,7 +10,11 @@ from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
 
 app = Flask(__name__)
-session['bot'] = VKBot()
+
+@app.route('/add_bot', methods=['GET'])
+def add_bot():
+    session['bot'] = VKBot()
+    return '200'
 
 @app.route('/', methods=['GET'])
 def describe():
