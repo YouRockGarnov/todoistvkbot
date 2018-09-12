@@ -1,5 +1,5 @@
 import requests
-from flask import request, json, g, Flask
+from flask import request, json, g, Flask, session
 
 from bots.vkbot import VKBot
 from configs.config_vkbot import *
@@ -10,7 +10,7 @@ from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
 
 app = Flask(__name__)
-bot = VKBot()
+session['bot'] = VKBot()
 
 @app.route('/', methods=['GET'])
 def describe():
@@ -88,7 +88,7 @@ def processing():
         from tools.constants import Messenger
         data['messenger'] = Messenger.VK.name
 
-        bot.reply_to_message(data)
+        session['bot'].reply_to_message(data)
         return 'ok'
 
     return 'ok'
@@ -129,7 +129,7 @@ def todoist_redirect():
         data['object']['success'] = 'False'
 
       # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
-    bot.reply_to_message(data)  # шлем боту сообщение с флагом success
+    session['bot'].reply_to_message(data)  # шлем боту сообщение с флагом success
 
     return '<a href="javascript:close_window();">close</a>'
 

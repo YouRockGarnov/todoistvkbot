@@ -1,11 +1,10 @@
 from configs.config_vkbot import confirmation_token
 from db.mymodels import db_proxy
 from tools.log import logger, logged
-from TodoistVK import bot
 import json
 import requests
 from db.mymodels import Subscription, AccessToken
-from flask import g
+from flask import g, session
 
 def debug_processing(strdata):
     print(strdata)
@@ -28,7 +27,7 @@ def debug_processing(strdata):
         from tools.constants import Messenger
         data['messenger'] = str(Messenger.VK.name)
 
-        bot.reply_to_message(data)
+        session['bot'].reply_to_message(data)
         return 'ok'
 
     db_proxy.close()
@@ -68,7 +67,7 @@ def debug_todoist_redirect(args):
         logger.error(sys.exc_info())
         data['object']['success'] = 'False'
 
-    global bot  # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
-    bot.reply_to_message(data)  # шлем боту сообщение с флагом success
+      # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
+    session['bot'].reply_to_message(data)  # шлем боту сообщение с флагом success
 
     return '<a href="javascript:close_window();">close</a>'
