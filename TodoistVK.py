@@ -12,13 +12,14 @@ import db.creating_scratch as creating_scratch
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
-app.config['SESSION_TYPE'] = 'filesystem'
+g.bot = VKBot()
+# app.config['SESSION_TYPE'] = 'filesystem'
 
-@app.route('/add_bot', methods=['GET'])
-@logged
-def add_bot():
-    session['bot'] = VKBot()
-    return '200'
+# @app.route('/add_bot', methods=['GET'])
+# @logged
+# def add_bot():
+#     g.bot = VKBot()
+#     return '200'
 
 @app.route('/', methods=['GET'])
 def describe():
@@ -96,7 +97,7 @@ def processing():
         from tools.constants import Messenger
         data['messenger'] = Messenger.VK.name
 
-        session['bot'].reply_to_message(data)
+        g.bot.reply_to_message(data)
         return 'ok'
 
     return 'ok'
@@ -137,7 +138,7 @@ def todoist_redirect():
         data['object']['success'] = 'False'
 
       # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
-    session['bot'].reply_to_message(data)  # шлем боту сообщение с флагом success
+    g.bot.reply_to_message(data)  # шлем боту сообщение с флагом success
 
     return '<a href="javascript:close_window();">close</a>'
 
