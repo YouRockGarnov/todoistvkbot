@@ -20,12 +20,13 @@ class BotBase:
 
         user_id = data['object']['user_id']
 
+        logger.info(self._secretaries.keys())
         # если юзер новый, то создаем ему секретаря
         if user_id not in self._secretaries.keys():
             logger.info('New user')
             self._secretaries[user_id] = Secretary(service_type)
 
-        logger.info(self._secretaries[user_id])
+        logger.info(self._secretaries[user_id]._state)
         # отправляем все сообщения, которые вернула секретарь
         for message in self._secretaries[user_id].reply(data):
             self.send_message(user_id, message)
