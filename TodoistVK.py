@@ -12,14 +12,13 @@ import db.creating_scratch as creating_scratch
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
-g.bot = VKBot()
 # app.config['SESSION_TYPE'] = 'filesystem'
 
-# @app.route('/add_bot', methods=['GET'])
-# @logged
-# def add_bot():
-#     g.bot = VKBot()
-#     return '200'
+@app.route('/add_bot', methods=['GET'])
+@logged
+def add_bot():
+    g.bot = VKBot()
+    return '200'
 
 @app.route('/', methods=['GET'])
 def describe():
