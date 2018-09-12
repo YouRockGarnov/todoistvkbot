@@ -5,6 +5,7 @@ from tools.log import logger, logged
 from app import app, bot
 from db.creating_scratch import init_db, db_proxy
 import db.creating_scratch as creating_scratch
+from routes import todoist_redirect
 
 @app.route('/', methods=['GET'])
 def describe():
