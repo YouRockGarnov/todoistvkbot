@@ -128,7 +128,7 @@ def todoist_redirect():
         logger.error(sys.exc_info())
         data['object']['success'] = 'False'
 
-    global bot  # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
+      # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
     bot.reply_to_message(data)  # шлем боту сообщение с флагом success
 
     return '<a href="javascript:close_window();">close</a>'
