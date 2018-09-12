@@ -17,7 +17,10 @@ app.secret_key = 'super secret key'
 @app.route('/add_bot', methods=['GET'])
 @logged
 def add_bot():
+    ctx = app.app_context()
     g.bot = VKBot()
+    ctx.push()
+
     return '200'
 
 @app.route('/', methods=['GET'])
