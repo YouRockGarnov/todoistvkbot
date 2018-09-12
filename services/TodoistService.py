@@ -4,7 +4,7 @@ from todoist import TodoistAPI
 from db.mymodels import *
 
 class TodoistService(ServiceBase):
-    state_pull = set()
+    # state_pull = set()
 
     def __init__(self):
         super().__init__()

@@ -45,9 +45,9 @@ def debug_todoist_redirect(args):
         }
     }
 
-    from services.TodoistService import TodoistService
-    if args['state'] in TodoistService.state_pull:
+    if args['state'] in g.todoist_state_pull:
         try:
+            g.todoist_state_pull.remove(args['state'])
             sending_args = {'client_id': 'fb26051eb06649bb968791f3d7c2f185',
                             'client_secret': '9d853dc5aba9490780682f159ff5c611',
                             'code': args['code']}

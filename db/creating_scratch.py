@@ -15,6 +15,9 @@ def init_db():
         db = SqliteDatabase('sender.sqlite')
         db_proxy.initialize(db)
 
+    from flask import g
+    g.todoist_state_pull = set()
+
 def create_db():
     import os
     if not ('HEROKU' in os.environ):
