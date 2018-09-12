@@ -22,4 +22,4 @@ class TodoistNotAutarizedState(NotAutarizedState):
         g.todoist_state_pull.add(user_id)
             # чтобы знать какие состояния может прислать обратно todoist
         logger.info('Added to state_pull in TodoistService {0}.'.format(user_id))
-        logger.info(g.todoist_state_pull.state_pull)
+        logger.info(g.todoist_state_pull)
