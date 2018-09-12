@@ -1,5 +1,6 @@
 from states.Todoist.WaitForAutorizeState import TodoistWaitForAutorizeState
 from states.Bases.NotAutarizedState import NotAutarizedState
+from tools.log import logger, logged
 
 # состояния позволяют не делать тысячу ифов, а сделать это в стиле ООП
 class TodoistNotAutarizedState(NotAutarizedState):
@@ -17,6 +18,8 @@ class TodoistNotAutarizedState(NotAutarizedState):
         self._messages[0] = self._messages[0].format(user_id=user_id)
             # я кидаю в url state=user_id - чтобы знать на какого пользователя пришел ответ от todoists
 
+
         from services.TodoistService import TodoistService
         TodoistService.state_pull.add(user_id)
             # чтобы знать какие состояния может прислать обратно todoist
+        logger.info('Added to state_pull in TodoistService {0}.'.format(user_id))
