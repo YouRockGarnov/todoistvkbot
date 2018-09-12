@@ -1,5 +1,5 @@
 import requests
-from flask import request, json, g, Flask, session
+from flask import request, json, g, Flask, session, current_app
 
 from bots.vkbot import VKBot
 from configs.config_vkbot import *
@@ -17,9 +17,7 @@ app.secret_key = 'super secret key'
 @app.route('/add_bot', methods=['GET'])
 @logged
 def add_bot():
-    ctx = app.app_context()
-    g.bot = VKBot()
-    ctx.push()
+    current_app.bot = VKBot()
 
     return '200'
 
@@ -99,7 +97,7 @@ def processing():
         from tools.constants import Messenger
         data['messenger'] = Messenger.VK.name
 
-        g.bot.reply_to_message(data)
+        current_app.bot.reply_to_message(data)
         return 'ok'
 
     return 'ok'
@@ -140,7 +138,7 @@ def todoist_redirect():
         data['object']['success'] = 'False'
 
       # предполагается, что vkmain и telemain просто импортируют и там будут свои боты
-    g.bot.reply_to_message(data)  # шлем боту сообщение с флагом success
+    current_app.bot.reply_to_message(data)  # шлем боту сообщение с флагом success
 
     return '<a href="javascript:close_window();">close</a>'
 
