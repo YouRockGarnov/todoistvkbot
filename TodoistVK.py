@@ -12,6 +12,7 @@ import db.creating_scratch as creating_scratch
 app = Flask(__name__)
 
 @app.route('/add_bot', methods=['GET'])
+@logged
 def add_bot():
     session['bot'] = VKBot()
     return '200'
